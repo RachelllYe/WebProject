@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<header>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+</header>
+<head>
+    <style>
+        .cardLayout{
+            border:rgb(224, 23, 117) solid 10px;
+            margin: 5px 0px;
+        }
+        tr{
+            border: solid 1px;
+        }
+        td{
+            border:solid 1px;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <br> 标题：<input type="text" id="input1" name="title_text">
+        <br> 来源：<input type="text" id="input2" name="title_text">
+        <input class="form-submit" type="button" id="btn1"value="查询">
+        <input type="reset">
+    </form>
+    <div class="cardLayout">
+        <table width="100%" id="record2"></table>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#btn1").click(function() {
+                $.get('/process_get?title=' + $("#input1").val()+'&source='+$("#input2").val(), function(data) {
+                    $("#record2").empty();
+                    $("#record2").append('<tr class="cardLayout"><td>url</td><td>source_name</td>' +
+                        '<td>title</td><td>publish_date</td></tr>');
+                    for (let list of data) {
+                        let table = '<tr class="cardLayout"><td>';
+                        Object.values(list).forEach(element => {
+                            table += (element + '</td><td>');
+                        });
+                        $("#record2").append(table + '</td></tr>');
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
+

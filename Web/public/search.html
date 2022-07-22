@@ -1,0 +1,102 @@
+
+<form class="form-horizontal" role="form">
+    <div class="row" style="margin-bottom: 5px;">
+        <label class="col-lg-2 control-label">标题关键词</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" placeholder="输入查询的关键词【用空格分隔】" ng-model="$parent.title">
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-bottom: 5px;">
+        <label class="col-lg-2 control-label">新闻来源</label>
+        <div class="col-lg-3">
+                <select class="form-control" autocomplete="off" ng-model="$parent.source">
+                    <option selected="selected">所有网站</option>
+                    <option>搜狐新闻</option>
+                    <option>网易新闻</option>
+                    <option>中国新闻网</option>
+                </select>
+          
+        </div> 
+    </div>
+
+    <div class="row" style="margin-bottom: 5px;">
+        <label class="col-lg-2 control-label">发布时间排序</label>
+        <div class="col-lg-3">
+            <!-- <input type="text" class="form-control" placeholder="内容关键词1" ng-model="$parent.content1"> -->
+                <select class="form-control" autocomplete="off" ng-model="$parent.sorted">
+                    <option selected="selected">默认</option>
+                    <option>倒序</option>
+                    <option>顺序</option>
+                </select>
+          
+        </div> 
+    </div>
+
+    <div class="row" style="margin-bottom: 5px;">
+        <label class="col-lg-2 control-label"></label>
+        <div class="col-lg-3">    
+            <button type="submit" class="btn btn-default" ng-click="search()">查询</button>
+        </div> 
+    </div>
+    
+
+</form>
+
+<!--显示查询结果-->
+<div ng-show="isshowresult">
+    <style>
+        .cardLayout{
+            border:rgb(245, 238, 182) solid 10px;
+            margin: 5px 0px;
+        }
+        tr{
+            border: solid 2px;
+        }
+        td{
+            border:solid 2px;
+        }
+    </style>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>序号</td>
+                <td>标题</td>
+                <td>来源</td>
+                <td>发布时间</td>
+                <td>链接</td>
+            </tr>
+
+        </thead>
+        <tbody>
+        <tr ng-repeat="(key, item) in items">
+            <td>{{index+key}}</td>
+            <td>{{item.title}}</td>
+            <td>{{item.source_name}}</td>
+            <td>{{item.publish_date}}</td>
+            <td>{{item.url}}</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <div class="row">
+<!--        </div>-->
+        <div class="pull-right">
+            <nav>
+                <ul class="pagination">
+                    <li>
+                        <a ng-click="Previous()" role="button"><span role="button">上一页</span></a>
+                    </li>
+                    <li ng-repeat="page in pageList" ng-class="{active:isActivePage(page)}" role="button">
+                        <a ng-click="selectPage(page)" >{{ page }}</a>
+                    </li>
+                    <li>
+                        <a ng-click="Next()" role="button"><span role="button">下一页</span></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
